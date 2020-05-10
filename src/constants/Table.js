@@ -11,4 +11,4 @@ export const tableHeaders = [
     Header: 'Participation',
     accessor: 'participation',
   },
-],
+]

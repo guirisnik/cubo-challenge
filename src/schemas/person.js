@@ -1,25 +1,47 @@
 import * as yup from 'yup'
-import { personConstants } from 'constants/Schemas'
+import { Name, Participation, RequiredField } from 'constants/Person'
 
-const nameSchema = yup
+const singleNameSchema = yup
   .string()
-  .required()
+  .required(RequiredField)
+  .min(
+    Name["min-number-of-characters"],
+    Name["invalid-length"],
+  )
   .matches(
-    personConstants["name-regex"],
-    personConstants["invalid-name"]
+    Name["single-name-regex"],
+    Name["invalid-character"],
+  )
+
+const multiNameSchema = yup
+  .string()
+  .required(RequiredField)
+  .min(
+    Name["min-number-of-characters"],
+    Name["invalid-length"],
+  )
+  .matches(
+    Name["multi-name-regex"],
+    Name["invalid-character"]
   )
 
 const participationSchema = yup
   .number()
-  .positive()
+  .typeError(Participation["invalid-participation"])
+  .integer(Participation["invalid-participation"])
+  .required(RequiredField)
   .max(
-    personConstants["max-participation"],
-    personConstants["invalid-participation"]
+    Participation["max-participation"],
+    Participation["invalid-participation"]
+  )
+  .min(
+    Participation["min-participation"],
+    Participation["invalid-participation"]
   )
 
 const personSchema = yup.object().shape({
-  firstName: nameSchema,
-  lastName: nameSchema,
+  firstName: singleNameSchema,
+  lastName: multiNameSchema,
   participation: participationSchema,
 })
 

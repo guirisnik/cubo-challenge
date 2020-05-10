@@ -6,7 +6,6 @@
 
 // You can delete this file if you're not using it
 const path = require('path')
-const fs = require('fs')
 const routes = require('./src/routes')
 
 exports.createPages = ({ actions }) => {
@@ -17,18 +16,4 @@ exports.createPages = ({ actions }) => {
       component: route.component,
     })
   })
-}
-
-exports.onPostBuild = () => {
-  fs.renameSync(
-    path.join(__dirname, 'public'),
-    path.join(__dirname, 'public-auto'),
-  )
-
-  fs.mkdirSync(path.join(__dirname, 'public'))
-
-  fs.renameSync(
-    path.join(__dirname, 'public-auto'),
-    path.join(__dirname, 'public', 'auto-refi'),
-  )
 }

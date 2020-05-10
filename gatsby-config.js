@@ -13,11 +13,23 @@ const rootImportPlugin = {
     constants: path.join(__dirname, 'src/constants'),
     hooks: path.join(__dirname, 'src/hooks'),
     images: path.join(__dirname, 'src/images'),
+    icons: path.join(__dirname, 'src/icons'),
     mock: path.join(__dirname, 'src/mock'),
+    modules: path.join(__dirname, 'src/modules'),
     pages: path.join(__dirname, 'src/pages'),
-    styles: path.join(__dirname, 'src/styles'),
     schemas: path.join(__dirname, 'src/schemas'),
+    styles: path.join(__dirname, 'src/styles'),
   },
+}
+
+const googleFontsPlugin = {
+  resolve: `gatsby-plugin-google-fonts`,
+  options: {
+    fonts: [
+      `Roboto`,
+    ],
+    display: 'swap'
+  }
 }
 
 const manifestPlugin = {
@@ -40,5 +52,6 @@ module.exports = {
     `gatsby-plugin-sharp`,
     rootImportPlugin,
     manifestPlugin,
+    googleFontsPlugin,
   ],
 }

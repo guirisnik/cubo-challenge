@@ -1,8 +1,8 @@
-import { css, styled } from 'styles/Styles';
+import { styled, css } from 'modules/Styles'
 
 
 const styledButton = () => css`
-  height: 40px;
+  height: inherit;
   border: 2px solid white;
   border-radius: 2px;
   background-color: #FFFFFF00;

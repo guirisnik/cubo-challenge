@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import { StyledButton } from './button.style'
+import { StyledButton } from './textButton.style'
 
 
 const propTypes = {

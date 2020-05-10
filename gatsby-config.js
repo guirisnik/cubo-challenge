@@ -47,9 +47,7 @@ module.exports = {
   pathPrefix: `/cubo-challenge`,
   plugins: [
     `gatsby-plugin-react-helmet`,
-    `gatsby-transformer-sharp`,
     'gatsby-plugin-netlify',
-    `gatsby-plugin-sharp`,
     rootImportPlugin,
     manifestPlugin,
     googleFontsPlugin,

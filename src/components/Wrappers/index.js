@@ -4,4 +4,6 @@ export {
 	FormWrapper,
 	InputWrapper,
 	LayoutWrapper,
+	IconWrapper,
+	HelperWrapper,
 } from "./Wrappers"

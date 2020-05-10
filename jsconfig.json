@@ -12,16 +12,20 @@
       "hooks/*": ["src/hooks/*"],
       "images": ["src/images"],
       "images/*": ["src/images/*"],
+      "icons": ["src/icons"],
+      "icons/*": ["src/icons/*"],
       "mock": ["src/mock"],
       "mock/*": ["src/mock/*"],
+      "modules": ["src/modules"],
+      "modules/*": ["src/modules/*"],
       "pages": ["src/pages"],
       "pages/*": ["src/pages/*"],
+      "schemas": ["src/schemas"],
+      "schemas/*": ["src/schemas/*"],
       "services": ["src/services"],
       "services/*": ["src/services/*"],
       "styles": ["src/styles"],
       "styles/*": ["src/styles/*"],
-      "schemas": ["src/schemas"],
-      "schemas/*": ["src/schemas/*"],
     }
   }
 }

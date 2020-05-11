@@ -1,13 +1,15 @@
 import React, { useMemo } from 'react'
-import { shape, arrayOf, string } from 'prop-types'
+import { shape, arrayOf, string, number } from 'prop-types'
 import { useTable } from 'react-table'
 import { tableHeaders } from 'constants/Table'
 
 const propTypes = {
-  data: arrayOf(
+  rowData: arrayOf(
     shape(
       tableHeaders.reduce((dataShape, header) => {
-        dataShape[header.accessor] = string.isRequired
+        dataShape[header.accessor] = header.accessor !== 'participation'
+          ? string.isRequired
+          : number.isRequired;
         return dataShape;
       }, {})
     )

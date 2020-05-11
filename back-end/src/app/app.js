@@ -1,9 +1,11 @@
 const express = require('express');
-const json = require('body-parser').json;
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const { createPerson, readAllPersons, deleteAllPersons } = require('../schemas/Person');
 
 const server = express();
-server.use(json());
+server.use(bodyParser.json());
+server.use(cors());
 
 require('../services/Database').dbConnect();
 
@@ -14,6 +16,7 @@ server.get('/', (req, res) => {
 server.post('/create/person', createPerson);
 server.get('/read/all', readAllPersons);
 server.post('/delete/all', deleteAllPersons);
+server.delete('/delete/all', deleteAllPersons);
 
 server.listen(
   process.env.PORT,

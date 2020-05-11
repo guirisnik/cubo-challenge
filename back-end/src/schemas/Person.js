@@ -33,7 +33,7 @@ const validateParticipation = async (newPerson) => {
     if (err) {
       throw (err);
     } else {
-      result = newPerson.participation;
+      result = parseInt(newPerson.participation);
 
       res.forEach((person) => {
         result += person.participation;
@@ -50,6 +50,7 @@ exports.createPerson = async (req, res) => {
 
     if (await validateParticipation(req.body)) {
       newPerson = await Person.create(req.body);
+      console.log('New person created.')
     } else {
       throw ('Participation overflow. Can\'t be over 100.');
     }
@@ -59,6 +60,7 @@ exports.createPerson = async (req, res) => {
       data: { person: newPerson }
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       status: 'fail',
       message: error,
@@ -70,12 +72,19 @@ exports.readAllPersons = async (req, res) => {
   try {
     let persons;
 
-    await Person.find((err, res) => {
-      if (err) {
-        throw (err);
-      } else {
-        persons = res;
-      }
+    await Person.find(
+      {},
+      {
+        '_id': 0,
+        '__v': 0,
+      },
+      (err, res) => {
+        if (err) {
+          throw (err);
+        } else {
+          persons = res;
+          console.log('All persons fetched.')
+        }
     });
 
     res.status(200).json({
@@ -83,6 +92,7 @@ exports.readAllPersons = async (req, res) => {
       data: persons,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       status: 'fail',
       message: error,
@@ -96,6 +106,7 @@ exports.deleteAllPersons = async (req, res) => {
       if (err) {
         throw (err);
       }
+      console.log('Base erased.')
     });
 
     res.status(200).json({
@@ -103,7 +114,8 @@ exports.deleteAllPersons = async (req, res) => {
       message: 'Base erased.',
     });
   } catch (error) {
-    res.status(200).json({
+    console.log(error);
+    res.status(400).json({
       status: 'fail',
       message: error,
     })

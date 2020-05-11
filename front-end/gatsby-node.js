@@ -5,8 +5,15 @@
  */
 
 // You can delete this file if you're not using it
-const path = require('path')
 const routes = require('./src/routes')
+
+const ACTIVE_ENV =
+  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || 'staging'
+console.log(`Using environment config: '${ACTIVE_ENV}'`) // eslint-disable-line no-console
+
+require('dotenv').config({
+  path: `.env.${ACTIVE_ENV}`,
+})
 
 exports.createPages = ({ actions }) => {
   const { createPage } = actions

@@ -1,15 +1,17 @@
 import React from 'react'
-import { string } from 'prop-types'
+import { string, bool } from 'prop-types'
 import { StyledButton } from './textButton.style'
 
 
 const propTypes = {
   innerText: string,
+  type: string.isRequired,
+  disabled: bool,
 }
 
-const TextButton = ({ innerText }) => {
+const TextButton = ({ innerText, type, disabled = false }) => {
   return (
-    <StyledButton> { innerText } </StyledButton>
+    <StyledButton type={type} disabled={disabled}> { innerText } </StyledButton>
   )
 }
 

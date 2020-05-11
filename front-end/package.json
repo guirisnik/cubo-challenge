@@ -5,20 +5,23 @@
   "version": "1.0.0",
   "author": "Guilherme Risnik <guilherme.risnik@gmail.com>",
   "scripts": {
-    "prebuild": "npm run clean",
-    "build": "gatsby build",
-    "develop": "gatsby clean && gatsby develop --port 4200 --open",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
+    "clean": "rimraf public",
+    "prebuild": "run-s clean",
+    "build": "gatsby build --prefix-paths",
+    "build:staging": "cross-env GATSBY_ACTIVE_ENV=staging run-p build",
+    "build:dev": "cross-env GATSBY_ACTIVE_ENV=development run-p build",
+    "develop": "cross-env GATSBY_ACTIVE_ENV=staging gatsby develop --port 4200 --open",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "start": "run-s develop",
+    "test": "env-cmd -f .env.staging kcd-scripts test"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@reach/router": "^1.3.3",
+    "axios": "^0.19.2",
     "formik": "^2.1.4",
+    "http-proxy-middleware": "^1.0.3",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -29,6 +32,8 @@
     "yup": "^0.28.5"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
     "gatsby": "^2.21.21",
     "gatsby-plugin-csp": "^1.1.3",
     "gatsby-plugin-google-fonts": "^1.0.1",
@@ -38,7 +43,10 @@
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-plugin-root-import": "^2.0.5",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.9",
-    "prettier": "2.0.5"
+    "kcd-scripts": "^6.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "2.0.5",
+    "rimraf": "^3.0.2"
   },
   "keywords": [
     "gatsby",

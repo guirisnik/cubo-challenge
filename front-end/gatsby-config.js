@@ -1,4 +1,17 @@
 const path = require('path')
+const proxy = require('http-proxy-middleware')
+
+const developMiddleware = app => {
+  app.use(
+    '/gateway',
+    proxy.createProxyMiddleware({
+      target: process.env.API_GATEWAY,
+      pathRewrite: { '/gateway': '' },
+      changeOrigin: true,
+      secure: false,
+    }),
+  )
+}
 
 const siteMetadata = {
   title: `Cubo challenge`,
@@ -52,4 +65,5 @@ module.exports = {
     manifestPlugin,
     googleFontsPlugin,
   ],
+  developMiddleware
 }

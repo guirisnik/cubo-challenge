@@ -1,6 +1,6 @@
-import express from 'express';
-import { json } from 'body-parser'
-import { createPerson } from '../schemas/Person';
+const express = require('express');
+const json = require('body-parser').json;
+const { createPerson, readAllPersons, deleteAllPersons } = require('../schemas/Person');
 
 const server = express();
 server.use(json());
@@ -12,6 +12,8 @@ server.get('/', (req, res) => {
 })
 
 server.post('/create/person', createPerson);
+server.get('/read/all', readAllPersons);
+server.post('/delete/all', deleteAllPersons);
 
 server.listen(
   process.env.PORT,

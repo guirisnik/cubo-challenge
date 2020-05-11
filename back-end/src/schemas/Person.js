@@ -1,5 +1,4 @@
-import { Schema, model } from 'mongoose';
-import "regenerator-runtime/runtime.js";
+const database = require('mongoose');
 
 const nameSchema = {
   type: String,
@@ -19,17 +18,41 @@ const participationSchema = {
   validate: /^0*(?:[1-9][0-9]?|100)$/i,
 }
 
-const personSchema = new Schema({
+const personSchema = new database.Schema({
   firstName: nameSchema,
   lastName: nameSchema,
   participation: participationSchema,
 })
 
-const Person = model('Person', personSchema);
+const Person = database.model('Person', personSchema);
+
+const validateParticipation = async (newPerson) => {
+  let result;
+
+  await Person.find((err, res) => {
+    if (err) {
+      throw (err);
+    } else {
+      result = newPerson.participation;
+
+      res.forEach((person) => {
+        result += person.participation;
+      });
+    }
+  });
+
+  return result <= 100;
+}
 
 exports.createPerson = async (req, res) => {
   try {
-    const newPerson = await Person.create(req.body);
+    let newPerson;
+
+    if (await validateParticipation(req.body)) {
+      newPerson = await Person.create(req.body);
+    } else {
+      throw ('Participation overflow. Can\'t be over 100.');
+    }
 
     res.status(201).json({
       status: 'success',
@@ -37,6 +60,50 @@ exports.createPerson = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
+      status: 'fail',
+      message: error,
+    })
+  }
+}
+
+exports.readAllPersons = async (req, res) => {
+  try {
+    let persons;
+
+    await Person.find((err, res) => {
+      if (err) {
+        throw (err);
+      } else {
+        persons = res;
+      }
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: persons,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: error,
+    });
+  }
+}
+
+exports.deleteAllPersons = async (req, res) => {
+  try {
+    await Person.deleteMany({}, (err) => {
+      if (err) {
+        throw (err);
+      }
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Base erased.',
+    });
+  } catch (error) {
+    res.status(200).json({
       status: 'fail',
       message: error,
     })

@@ -1,22 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table } from 'components/Table'
-
-const testData = [
-  {
-    'firstName': 'Jane',
-    'lastName': 'Doe',
-    'participation': '50',
-  },
-  {
-    'firstName': 'Foo',
-    'lastName': 'Bar',
-    'participation': '50',
-  },
-]
-
-const rowData = testData;
+import { usePerson } from 'hooks/usePerson'
 
 const Page = () => {
+  const { readAll } = usePerson();
+  const [rowData, setRowData] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const rowData = await readAll();
+      setRowData(rowData);
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <Table rowData={rowData} />
   )

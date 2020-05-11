@@ -1,0 +1,17 @@
+[build]
+  base = "./"
+  publish = "./public"
+  command = "npm run build:staging"
+
+[[redirects]]
+  from = "/"
+  to = "/cubo/"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+
